@@ -55,9 +55,11 @@ PP3SGR.Rewards.Name = {
 - `Name`
 
   The name to give this reward. Used internally in logging messages, but is still required. To use characters not supported by Lua's `.` syntax, replace the period with square brackets `[]` and add your name between quotes (`''` or `""`) inside them.
+  
 - `OneTime`
 
   Designates whether or not this reward is only redeemable once (ie, if the user leaves and rejoins the group, they will not receive this reward again). Set this to `true` to enable this feature, or leave it as `false` to grant the reward every time they join.
+
 - `Callback`
 
   The callback to run to handle this reward. Takes `ply` as a parameter, which is the player currently being rewarded.
