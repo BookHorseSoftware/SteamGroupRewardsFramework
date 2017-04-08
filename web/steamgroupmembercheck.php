@@ -1,16 +1,5 @@
 <?php
 
-function toCommunityID($id) {
-	if (preg_match('/^STEAM_/', $id)) {
-		$parts = explode(':', $id);
-		return bcadd(bcadd(bcmul($parts[2], '2'), '76561197960265728'), $parts[1]);
-	} elseif (is_numeric($id) && strlen($id) < 16) {
-		return bcadd($id, '76561197960265728');
-	} else {
-		return $id;
-	}
-}
-
 $response = [];
 
 header('Content-type: application/json');
@@ -31,7 +20,7 @@ if (isset($response['message'])) {
 	die();
 }
 
-$user = toCommunityID($_GET['steamid']);
+$user  = $_GET['steamid'];
 $group = $_GET['group'];
 
 $response['status'] = 'failed';
