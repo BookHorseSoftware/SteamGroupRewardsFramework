@@ -15,7 +15,6 @@ if SERVER then
 	end
 
 	AddCSLuaFiles('pp3gsr/client')
-	AddCSLuaFiles('pp3gsr/shared')
 
 	PP3SGR = {}
 	include('pp3sgr/config.lua')
