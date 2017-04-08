@@ -28,9 +28,11 @@ General configuration may be found under the **GENERAL SETTINGS** header in `lua
 - `PP3SGR.Config.Commands`
 
   An array of possible chat commands to open the Steam group page. Note that these chat commands **also** check to see if the user has joined the Steam group upon re-entering the game, so it is best to remove any Steam group commands from other addons if possible. Set to an empty array to disable the command.
+  
 - `PP3SGR.Config.SteamGroup`
 
   The group ID or custom group URL end to check for player membership. This is the end of the URL for your group page, typically the custom URL you set when creating your group. It's the XXXXXX part in http://steamcommunity.com/groups/XXXXXX, or the numbers (YYYYYY) in http://steamcommunity.com/gid/YYYYYY.
+
 - `PP3SGR.Config.APIURL`
 
   The URL serving the provided steamgroupmembercheck.php file. **Leave this on its default setting if you don't know what you're doing!**
