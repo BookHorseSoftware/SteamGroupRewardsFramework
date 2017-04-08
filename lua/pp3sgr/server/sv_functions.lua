@@ -1,6 +1,6 @@
---- Checks the given player for Steam gruop status and rewards them accordingly.
+--- Checks the given player for Steam group status and rewards them accordingly.
 -- Checks to make sure the player has joined or left the Steam group, and grants all appropriate rewards.
--- Will also grant any one-time rewards added *after* the player joined the Steam gruop should they not
+-- Will also grant any one-time rewards added *after* the player joined the Steam group should they not
 -- have them. Does not repeat rewards. If a one-time reward has already been granted, this function will
 -- skip it. If it's a recurring reward for users that leave/join a group, they will only be granted the
 -- reward if their group status changes from LEFT to JOINED.

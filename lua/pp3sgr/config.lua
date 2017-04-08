@@ -36,7 +36,7 @@ PP3SGR.Rewards = {} -- DO NOT TOUCH ME
 -- Add your custom rewards here!
 -- NOTE: The PData variable PP3SGR_InSteamGroup may be used to grant external rewards (PAC3 access, etc).
 -- Rewards that cannot be covered by callbacks like these should use Player:GetPData('PP3SGR_InSteamGroup', 'false') == 'true'
--- to determine if a user is in the Steam gruop or not.
+-- to determine if a user is in the Steam group or not.
 
 -- TO ADD NEW REWARDS, use the template below.
 --[===[
