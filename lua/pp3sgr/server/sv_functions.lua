@@ -1,3 +1,10 @@
+--- Checks the given player for Steam gruop status and rewards them accordingly.
+-- Checks to make sure the player has joined or left the Steam group, and grants all appropriate rewards.
+-- Will also grant any one-time rewards added *after* the player joined the Steam gruop should they not
+-- have them. Does not repeat rewards. If a one-time reward has already been granted, this function will
+-- skip it. If it's a recurring reward for users that leave/join a group, they will only be granted the
+-- reward if their group status changes from LEFT to JOINED.
+-- @param ply  The player to reward
 function PP3SGR.RewardPlayer(ply)
 	PP3SGR.CheckPlayer(ply, function(ply)
 		if not ply.InGroup then return end
@@ -16,6 +23,13 @@ function PP3SGR.RewardPlayer(ply)
 	end)
 end
 
+--- Checks to see if the user has joined the configured Steam group.
+-- Hits the configured API URL to verify that the given user has joined the Steam group. Runs the given
+-- callback when completed. The Player instance will have an InGroup variable designating whether or not
+-- the user associated with it has joined the Steam group or not, and will have the PData value
+-- 'PP3SGR_InSteamGroup' set to 'true' if they're a member of the group, or 'false' if they've left.
+-- @param ply       The player to check
+-- @param callback  The callback to run when complete
 function PP3SGR.CheckPlayer(ply, callback)
 	local url = PP3SGR.Config.APIURL .. '?group=' .. PP3SGR.Config.SteamGroup .. '&steamid=' .. ply:SteamID64()
 
@@ -52,6 +66,10 @@ function PP3SGR.CheckPlayer(ply, callback)
 		end)
 end
 
+--- Writes a formatted message to stdout
+-- @param channel   The channel to echo to
+-- @param _str      The string to write to the log
+-- @param[opt] ...  Anything to pass to string.format
 function PP3SGR.Log(channel, _str, ...)
 	local str = _str
 	if ... then
@@ -63,4 +81,20 @@ function PP3SGR.Log(channel, _str, ...)
 	end
 
 	print(string.format('[PP3SGR]: %s: %s', channel, str))
+end
+
+--- Writes a colored string to the given player's chat
+-- Workaround for Garry's Mod not having this function serverside - basically a serverside
+-- wrapper around chat.AddText.
+-- @param           ply     The player to send a chat message to
+-- @param[opt]      color   The color to use
+-- @param           str     The string to write using the given color
+-- @param[opt]      color2  The color to use
+-- @param[optchain] str2    The string to write using the given color
+function PP3SGR.ColoredChatPrint(ply, ...)
+	local args = {...}
+
+	net.Start('PP3SGR_ColoredChatPrint')
+		net.WriteTable(args)
+	net.Send(ply)
 end

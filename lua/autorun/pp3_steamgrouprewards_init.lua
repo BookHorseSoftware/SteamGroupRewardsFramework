@@ -1,6 +1,7 @@
 if SERVER then
 	AddCSLuaFile()
 	util.AddNetworkString('PP3SGR_OpenSteamGroup')
+	util.AddNetworkString('PP3SGR_ColoredChatPrint')
 
 	local function AddCSLuaFiles(dir)
 		local files, dirs = file.Find(dir .. '/*', 'LUA')
