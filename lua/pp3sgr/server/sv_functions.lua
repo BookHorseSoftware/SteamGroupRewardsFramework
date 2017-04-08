@@ -17,7 +17,7 @@ function PP3SGR.RewardPlayer(ply)
 end
 
 function PP3SGR.CheckPlayer(ply, callback)
-	local url = PP3SGR.Config.APIURL .. '?group=' .. PP3SGR.Config.SteamGroup .. '&steamid=' .. ply:SteamID()
+	local url = PP3SGR.Config.APIURL .. '?group=' .. PP3SGR.Config.SteamGroup .. '&steamid=' .. ply:SteamID64()
 
 	http.Fetch(url,
 		function(body, len, headers, code)
