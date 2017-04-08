@@ -67,9 +67,9 @@ function PP3SGR.CheckPlayer(ply, callback)
 end
 
 --- Writes a formatted message to stdout
--- @param channel   The channel to echo to
--- @param _str      The string to write to the log
--- @param[opt] ...  Anything to pass to string.format
+-- @param      channel  The channel to echo to
+-- @param      _str     The string to write to the log
+-- @param[opt] ...      Anything to pass to string.format
 function PP3SGR.Log(channel, _str, ...)
 	local str = _str
 	if ... then
