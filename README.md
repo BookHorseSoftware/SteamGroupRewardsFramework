@@ -49,6 +49,7 @@ PP3SGR.Rewards.Name = {
 ```
 
 **Structure:** (all elements are **required**)
+
 - `Name`
 
   The name to give this reward. Used internally in logging messages, but is still required. To use characters not supported by Lua's `.` syntax, replace the period with square brackets `[]` and add your name between quotes (`''` or `""`) inside them.
