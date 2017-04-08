@@ -40,7 +40,7 @@ To add new rewards, edit `lua/pp3sgr/config.lua`. Under the **REWARDS SETTINGS**
 PP3SGR.Rewards.Name = {
 	OneTime  = false,
 	Callback = function(ply)
-	
+		-- Your code goes here!
 	end,
 }
 ```
