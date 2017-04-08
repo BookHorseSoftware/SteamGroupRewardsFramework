@@ -64,7 +64,7 @@ PP3SGR.Rewards.Name = {
 
   The callback to run to handle this reward. Takes `ply` as a parameter, which is the player currently being rewarded.
 
-This addon also makes use of PData. To grant rewards outside of those available in callbacks, _ie_ PAC3 access or hook-related rewards, you may use the PData variable `PP3SGR_InSteamGruop`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+This addon also makes use of PData. To grant rewards outside of those available in callbacks, _ie_ PAC3 access or hook-related rewards, you may use the PData variable `PP3SGR_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
 
 ## Maintainers
 
