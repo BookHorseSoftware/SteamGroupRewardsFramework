@@ -21,7 +21,6 @@ if SERVER then
 	include('pp3sgr/config.lua')
 	include('pp3sgr/server/sv_functions.lua')
 	include('pp3sgr/server/sv_hooks.lua')
-	include('pp3sgr/server/sv_concommands.lua')
 	
 	PP3SGR.Log('DEBUG', 'PP3SGR LOADED SUCCESSFULLY!')
 end
