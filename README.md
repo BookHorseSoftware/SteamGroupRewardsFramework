@@ -26,10 +26,13 @@ Simply clone a version of this addon to your server's addon directory. There are
 General configuration may be found under the **GENERAL SETTINGS** header in `lua/pp3sgr/config.lua`. The configuration options are documented below:
 
 - `PP3SGR.Config.Commands`
+
   An array of possible chat commands to open the Steam group page. Note that these chat commands **also** check to see if the user has joined the Steam group upon re-entering the game, so it is best to remove any Steam group commands from other addons if possible. Set to an empty array to disable the command.
 - `PP3SGR.Config.SteamGroup`
+
   The group ID or custom group URL end to check for player membership. This is the end of the URL for your group page, typically the custom URL you set when creating your group. It's the XXXXXX part in http://steamcommunity.com/groups/XXXXXX, or the numbers (YYYYYY) in http://steamcommunity.com/gid/YYYYYY.
 - `PP3SGR.Config.APIURL`
+
   The URL serving the provided steamgroupmembercheck.php file. **Leave this on its default setting if you don't know what you're doing!**
 
 ## Usage
@@ -46,11 +49,14 @@ PP3SGR.Rewards.Name = {
 ```
 
 **Structure:** (all elements are **required**)
-- `Name`  
+- `Name`
+
   The name to give this reward. Used internally in logging messages, but is still required. To use characters not supported by Lua's `.` syntax, replace the period with square brackets `[]` and add your name between quotes (`''` or `""`) inside them.
-- `OneTime`  
+- `OneTime`
+
   Designates whether or not this reward is only redeemable once (ie, if the user leaves and rejoins the group, they will not receive this reward again). Set this to `true` to enable this feature, or leave it as `false` to grant the reward every time they join.
-- `Callback`  
+- `Callback`
+
   The callback to run to handle this reward. Takes `ply` as a parameter, which is the player currently being rewarded.
 
 This addon also makes use of PData. To grant rewards outside of those available in callbacks, _ie_ PAC3 access or hook-related rewards, you may use the PData variable `PP3SGR_InSteamGruop`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
