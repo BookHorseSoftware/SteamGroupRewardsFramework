@@ -1,5 +1,7 @@
 # PP3 SteamGroupRewards
 
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+
 > A super-simple framework for granting users rewards for joining your Steam gruop.
 
 SteamGroupRewards is a dead-simple, FOSS framework for granting users on your Garry's Mod server rewards for joining your Steam group. It allows for recurring or one-time rewards, and is as simple as writing callback functions. It couldn't get easier and more powerful.
