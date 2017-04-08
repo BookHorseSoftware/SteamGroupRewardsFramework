@@ -9,6 +9,8 @@ function PP3SGR.RewardPlayer(ply)
 	PP3SGR.CheckPlayer(ply, function(ply)
 		if not ply.InGroup then return end
 
+		PP3SGR.Log('DEBUG', 'ply.InGroup = true - continuing with rewards...')
+
 		for name, data in pairs(PP3SGR.Rewards) do
 			if data.OneTime then
 				if ply:GetPData('PP3SGR_ExhaustedOneTimeReward_' .. name, 'false') == 'true' then continue end
@@ -19,6 +21,16 @@ function PP3SGR.RewardPlayer(ply)
 
 			PP3SGR.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())
 			data.Callback(ply)
+		end
+
+		if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'false' then
+			ply:SetPData('PP3SGR_InSteamGroup', 'true')
+			PP3SGR.ColoredChatPrint(ply, 'Thank you for joining our Steam group!')
+
+			PP3SGR.ColoredChatBroadcast(ply, Color(255, 255, 255), ' just got rewards for joining our ', Color(100, 255, 100), 'Steam group', Color(255, 255, 255), '!')
+			if PP3SGR.Config.Commands[1] then
+				PP3SGR.ColoredChatBroadcast('Type ', Color(100, 100, 255), PP3SGR.Config.Commands[1], Color(255, 255, 255), ' in chat to join as well!')
+			end
 		end
 	end)
 end
@@ -44,7 +56,6 @@ function PP3SGR.CheckPlayer(ply, callback)
 
 					if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'false' then
 						PP3SGR.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
-						ply:SetPData('PP3SGR_InSteamGroup', 'true')
 					end
 				else
 					PP3SGR.Log('DEBUG', 'Player %s (%s) is not in group.', ply:Nick(), ply:SteamID())
@@ -92,9 +103,25 @@ end
 -- @param[opt]      color2  The color to use
 -- @param[optchain] str2    The string to write using the given color
 function PP3SGR.ColoredChatPrint(ply, ...)
-	local args = {...}
+	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'PP3SGR', Color(255, 255, 255), ']: ', ...}
 
 	net.Start('PP3SGR_ColoredChatPrint')
 		net.WriteTable(args)
 	net.Send(ply)
 end
+
+--- Writes a colored string to everyone's chats
+-- Workaround for Garry's Mod not having this function serverside - basically a serverside
+-- wrapper around chat.AddText.
+-- @param[opt]      color   The color to use
+-- @param           str     The string to write using the given color
+-- @param[opt]      color2  The color to use
+-- @param[optchain] str2    The string to write using the given color
+function PP3SGR.ColoredChatBroadcast(...)
+	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'PP3SGR', Color(255, 255, 255), ']: ', ...}
+
+	net.Start('PP3SGR_ColoredChatPrint')
+		net.WriteTable(args)
+	net.Broadcast()
+end
+
