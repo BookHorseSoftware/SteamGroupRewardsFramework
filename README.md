@@ -80,4 +80,4 @@ To view all upcoming features and bugfixes, as well as past changes, see our [Tr
 
 ## License
 
-Copyright (c) PonyPwnage 3.0, 2017. Licensed under the [GNU General Public License v3.0](COPYING.md).
+Copyright (c) PonyPwnage 3.0, 2017. Licensed under the [GNU General Public License v3.0](LICENSE.md).
