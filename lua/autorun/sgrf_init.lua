@@ -26,5 +26,5 @@ if SERVER then
 end
 
 if CLIENT then
-	include('SGRF/client/cl_netmessages.lua')
+	include('sgrf/client/cl_netmessages.lua')
 end
