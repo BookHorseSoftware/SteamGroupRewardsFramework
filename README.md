@@ -31,11 +31,11 @@ General configuration may be found under the **GENERAL SETTINGS** header in `lua
   
 - `SGRF.Config.SteamGroup`
 
-  The group ID or custom group URL end to check for player membership. This is the end of the URL for your group page, typically the custom URL you set when creating your group. It's the XXXXXX part in http://steamcommunity.com/groups/XXXXXX, or the numbers (YYYYYY) in http://steamcommunity.com/gid/YYYYYY.
+  The group ID to check for player membership. It's the numbers (YYYYYY) in http://steamcommunity.com/gid/YYYYYY. This number can also be found in your group's "edit profile" section.
 
-- `SGRF.Config.APIURL`
+- `SGRF.Config.SteamAPIKey`
 
-  The URL serving the provided steamgroupmembercheck.php file. **Leave this on its default setting if you don't know what you're doing!**
+  This is a Steam Community API key. You can find it at http://steamcommunity.com/dev/apikey.
 
 ## Usage
 
