@@ -17,14 +17,13 @@ SGRF.Config.Commands = {
 }
 
 --- The group ID to check
--- This is the end of the URL for your group page, typically the custom URL you set when creating
--- your group. It's the XXXXXX part in http://steamcommunity.com/groups/XXXXXX, or the numbers (YYYYYY)
--- in http://steamcommunity.com/gid/YYYYYY.
+-- This is your group's ID. You can find this on your group's profile edit page, after the "ID:"
+-- label.
 SGRF.Config.SteamGroup = 'CHANGE ME'
 
---- The URL serving the provided steamgroupmembercheck.php file
--- Leave this on its default setting if you don't know what you're doing.
-SGRF.Config.APIURL = 'https://bytewave.antigravities.net/steamgroup.php'
+--- Your Steam Web API key
+-- You can get this at https://steamcommunity.com/dev/apikey.
+SGRF.Config.SteamAPIKey = 'CHANGE ME'
 
 --[[-------------------------
        REWARDS SETTINGS
