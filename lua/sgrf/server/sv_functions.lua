@@ -43,14 +43,23 @@ end
 -- @param ply       The player to check
 -- @param callback  The callback to run when complete
 function SGRF.CheckPlayer(ply, callback)
-	local url = SGRF.Config.APIURL .. '?group=' .. SGRF.Config.SteamGroup .. '&steamid=' .. ply:SteamID64()
+	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. "&steamid=" .. ply:SteamID64()
 
 	http.Fetch(url,
 		function(body, len, headers, code)
 			SGRF.Log('TRACE', body)
 			data = util.JSONToTable(body)
-			if data.status == 'success' then
-				if data.inGroup then
+			if data.response.success == true then
+				local inGroup = false
+				
+				for k,v in pairs(data.response.groups) do
+					if v.gid == SGRF.Config.SteamGroup then
+						inGroup = true
+						break
+					end
+				end
+				
+				if inGroup then
 					SGRF.Log('DEBUG', 'Player %s (%s) is in group.', ply:Nick(), ply:SteamID())
 					ply.InGroup = true
 
