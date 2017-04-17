@@ -69,6 +69,7 @@ This addon also makes use of PData. To grant rewards outside of those available 
 ## Maintainers
 
 - [BytewaveMLP](https://github.com/BytewaveMLP)
+- [antigravities](https://alexandra.moe/)
 
 ## Contribute
 
