@@ -1,5 +1,8 @@
 <?php
 
+// SGRF - Copyright (c) Bytewave, 2017.
+// Licensed under the GNU GPL v3
+
 $response = [];
 
 header('Content-type: application/json');

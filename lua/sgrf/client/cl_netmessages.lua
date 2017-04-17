@@ -1,8 +1,8 @@
-net.Receive('PP3SGR_OpenSteamGroup', function()
+net.Receive('SGRF_OpenSteamGroup', function()
 	gui.OpenURL('http://steamcommunity.com/groups/' .. net.ReadString())
 end)
 
-net.Receive('PP3SGR_ColoredChatPrint', function()
+net.Receive('SGRF_ColoredChatPrint', function()
 	local args = net.ReadTable()
 	chat.AddText(unpack(args))
 end)

@@ -5,31 +5,31 @@
 -- skip it. If it's a recurring reward for users that leave/join a group, they will only be granted the
 -- reward if their group status changes from LEFT to JOINED.
 -- @param ply  The player to reward
-function PP3SGR.RewardPlayer(ply)
-	PP3SGR.CheckPlayer(ply, function(ply)
+function SGRF.RewardPlayer(ply)
+	SGRF.CheckPlayer(ply, function(ply)
 		if not ply.InGroup then return end
 
-		PP3SGR.Log('DEBUG', 'ply.InGroup = true - continuing with rewards...')
+		SGRF.Log('DEBUG', 'ply.InGroup = true - continuing with rewards...')
 
-		for name, data in pairs(PP3SGR.Rewards) do
+		for name, data in pairs(SGRF.Rewards) do
 			if data.OneTime then
-				if ply:GetPData('PP3SGR_ExhaustedOneTimeReward_' .. name, 'false') == 'true' then continue end
-				ply:SetPData('PP3SGR_ExhaustedOneTimeReward_' .. name, 'true')
+				if ply:GetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'false') == 'true' then continue end
+				ply:SetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'true')
 			else
-				if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'true' then continue end
+				if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then continue end
 			end
 
-			PP3SGR.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())
+			SGRF.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())
 			data.Callback(ply)
 		end
 
-		if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'false' then
-			ply:SetPData('PP3SGR_InSteamGroup', 'true')
-			PP3SGR.ColoredChatPrint(ply, 'Thank you for joining our Steam group!')
+		if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+			ply:SetPData('SGRF_InSteamGroup', 'true')
+			SGRF.ColoredChatPrint(ply, 'Thank you for joining our Steam group!')
 
-			PP3SGR.ColoredChatBroadcast(ply, Color(255, 255, 255), ' just got rewards for joining our ', Color(100, 255, 100), 'Steam group', Color(255, 255, 255), '!')
-			if PP3SGR.Config.Commands[1] then
-				PP3SGR.ColoredChatBroadcast('Type ', Color(100, 100, 255), PP3SGR.Config.Commands[1], Color(255, 255, 255), ' in chat to join as well!')
+			SGRF.ColoredChatBroadcast(ply, Color(255, 255, 255), ' just got rewards for joining our ', Color(100, 255, 100), 'Steam group', Color(255, 255, 255), '!')
+			if SGRF.Config.Commands[1] then
+				SGRF.ColoredChatBroadcast('Type ', Color(100, 100, 255), SGRF.Config.Commands[1], Color(255, 255, 255), ' in chat to join as well!')
 			end
 		end
 	end)
@@ -39,41 +39,41 @@ end
 -- Hits the configured API URL to verify that the given user has joined the Steam group. Runs the given
 -- callback when completed. The Player instance will have an InGroup variable designating whether or not
 -- the user associated with it has joined the Steam group or not, and will have the PData value
--- 'PP3SGR_InSteamGroup' set to 'true' if they're a member of the group, or 'false' if they've left.
+-- 'SGRF_InSteamGroup' set to 'true' if they're a member of the group, or 'false' if they've left.
 -- @param ply       The player to check
 -- @param callback  The callback to run when complete
-function PP3SGR.CheckPlayer(ply, callback)
-	local url = PP3SGR.Config.APIURL .. '?group=' .. PP3SGR.Config.SteamGroup .. '&steamid=' .. ply:SteamID64()
+function SGRF.CheckPlayer(ply, callback)
+	local url = SGRF.Config.APIURL .. '?group=' .. SGRF.Config.SteamGroup .. '&steamid=' .. ply:SteamID64()
 
 	http.Fetch(url,
 		function(body, len, headers, code)
-			PP3SGR.Log('TRACE', body)
+			SGRF.Log('TRACE', body)
 			data = util.JSONToTable(body)
 			if data.status == 'success' then
 				if data.inGroup then
-					PP3SGR.Log('DEBUG', 'Player %s (%s) is in group.', ply:Nick(), ply:SteamID())
+					SGRF.Log('DEBUG', 'Player %s (%s) is in group.', ply:Nick(), ply:SteamID())
 					ply.InGroup = true
 
-					if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'false' then
-						PP3SGR.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
+					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
 					end
 				else
-					PP3SGR.Log('DEBUG', 'Player %s (%s) is not in group.', ply:Nick(), ply:SteamID())
+					SGRF.Log('DEBUG', 'Player %s (%s) is not in group.', ply:Nick(), ply:SteamID())
 					ply.InGroup = false
 
-					if ply:GetPData('PP3SGR_InSteamGroup', 'false') == 'true' then
-						PP3SGR.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
-						ply:SetPData('PP3SGR_InSteamGroup', 'false')
+					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then
+						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
+						ply:SetPData('SGRF_InSteamGroup', 'false')
 					end
 				end
 			else
-				PP3SGR.Log('DEBUG', 'Request failed for player %s (%s) - %s: %s (%s)', ply:Nick(), ply:SteamID(), data.status, data.message, data.comment)
+				SGRF.Log('DEBUG', 'Request failed for player %s (%s) - %s: %s (%s)', ply:Nick(), ply:SteamID(), data.status, data.message, data.comment)
 			end
 
 			callback(ply)
 		end,
 		function(error)
-			PP3SGR.Log('ERROR', 'API check failed with code %s', error)
+			SGRF.Log('ERROR', 'API check failed with code %s', error)
 		end)
 end
 
@@ -81,7 +81,7 @@ end
 -- @param      channel  The channel to echo to
 -- @param      _str     The string to write to the log
 -- @param[opt] ...      Anything to pass to string.format
-function PP3SGR.Log(channel, _str, ...)
+function SGRF.Log(channel, _str, ...)
 	local str = _str
 	if ... then
 		if type(...) == 'table' then
@@ -91,7 +91,7 @@ function PP3SGR.Log(channel, _str, ...)
 		end
 	end
 
-	print(string.format('[PP3SGR]: %s: %s', channel, str))
+	print(string.format('[SGRF]: %s: %s', channel, str))
 end
 
 --- Writes a colored string to the given player's chat
@@ -102,10 +102,10 @@ end
 -- @param           str     The string to write using the given color
 -- @param[opt]      color2  The color to use
 -- @param[optchain] str2    The string to write using the given color
-function PP3SGR.ColoredChatPrint(ply, ...)
-	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'PP3SGR', Color(255, 255, 255), ']: ', ...}
+function SGRF.ColoredChatPrint(ply, ...)
+	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'SGRF', Color(255, 255, 255), ']: ', ...}
 
-	net.Start('PP3SGR_ColoredChatPrint')
+	net.Start('SGRF_ColoredChatPrint')
 		net.WriteTable(args)
 	net.Send(ply)
 end
@@ -117,10 +117,10 @@ end
 -- @param           str     The string to write using the given color
 -- @param[opt]      color2  The color to use
 -- @param[optchain] str2    The string to write using the given color
-function PP3SGR.ColoredChatBroadcast(...)
-	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'PP3SGR', Color(255, 255, 255), ']: ', ...}
+function SGRF.ColoredChatBroadcast(...)
+	local args = {Color(255, 255, 255), '[', Color(157, 12, 207), 'SGRF', Color(255, 255, 255), ']: ', ...}
 
-	net.Start('PP3SGR_ColoredChatPrint')
+	net.Start('SGRF_ColoredChatPrint')
 		net.WriteTable(args)
 	net.Broadcast()
 end
