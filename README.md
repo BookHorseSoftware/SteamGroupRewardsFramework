@@ -4,7 +4,7 @@
 
 > A super-simple framework for granting users rewards for joining your Steam group.
 
-SteamGroupRewards is a dead-simple, FOSS framework for granting users on your Garry's Mod server rewards for joining your Steam group. It allows for recurring or one-time rewards, and is as simple as writing callback functions. It couldn't get easier and more powerful.
+SteamGroupRewardsFramework is a dead-simple, FOSS framework for granting users on your Garry's Mod server rewards for joining your Steam group. It allows for recurring or one-time rewards, and is as simple as writing callback functions. It couldn't get easier and more powerful.
 
 ## Table of Contents
 
@@ -72,7 +72,7 @@ This addon also makes use of PData. To grant rewards outside of those available 
 
 ## Contribute
 
-For issues and feature suggestions, use our [GitHub issues page](https://github.com/BytewaveMLP/SteamGroupRewards/issues). Verify that your bug report or suggested feature has not been submitted before first! When submitting a bug report, **please** be **as detailed as possible**. Provide any Lua errors you receive, and any information we request if necessary. Also, please be patient - the development team has personal lives, too! <3
+For issues and feature suggestions, use our [GitHub issues page](https://github.com/BytewaveMLP/SteamGroupRewardsFramework/issues). Verify that your bug report or suggested feature has not been submitted before first! When submitting a bug report, **please** be **as detailed as possible**. Provide any Lua errors you receive, and any information we request if necessary. Also, please be patient - the development team has personal lives, too! <3
 
 To view all upcoming features and bugfixes, as well as past changes, see our [Trello](https://trello.com/b/tIDu8ShH/steam-group-rewards).
 
