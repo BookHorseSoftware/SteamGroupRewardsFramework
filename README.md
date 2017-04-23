@@ -68,15 +68,16 @@ This addon also makes use of PData. To grant rewards outside of those available 
 
 ## Maintainers
 
-- [BytewaveMLP](https://github.com/BytewaveMLP)
-- [antigravities](https://alexandra.moe/)
+- [Book Horse Software](https://github.com/BookHorseSoftware)
+  - [BytewaveMLP](https://github.com/BytewaveMLP)
+  - [antigravities](https://alexandra.moe/)
 
 ## Contribute
 
-For issues and feature suggestions, use our [GitHub issues page](https://github.com/BytewaveMLP/SteamGroupRewardsFramework/issues). Verify that your bug report or suggested feature has not been submitted before first! When submitting a bug report, **please** be **as detailed as possible**. Provide any Lua errors you receive, and any information we request if necessary. Also, please be patient - the development team has personal lives, too! <3
+For issues and feature suggestions, use our [GitHub issues page](https://github.com/BookHorseSoftware/SteamGroupRewardsFramework/issues). Verify that your bug report or suggested feature has not been submitted before first! When submitting a bug report, **please** be **as detailed as possible**. Provide any Lua errors you receive, and any information we request if necessary. Also, please be patient - the development team has personal lives, too! <3
 
 To view all upcoming features and bugfixes, as well as past changes, see our [Trello](https://trello.com/b/tIDu8ShH/steam-group-rewards).
 
 ## License
 
-Copyright (c) Bytewave, 2017. Licensed under the [GNU General Public License v3.0](LICENSE).
+Copyright (c) Book Horse Software, 2017. Licensed under the [GNU General Public License v3.0](LICENSE).
