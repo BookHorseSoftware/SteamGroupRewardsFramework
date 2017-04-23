@@ -18,6 +18,9 @@ if SERVER then
 	AddCSLuaFiles('sgrf/client')
 
 	SGRF = {}
+	SGRF.Lib = {}
+	SGRF.Lib.SLAXML = include('sgrf/server/lib/slaxml.lua')
+
 	include('sgrf/config.lua')
 	include('sgrf/server/sv_functions.lua')
 	include('sgrf/server/sv_hooks.lua')

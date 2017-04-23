@@ -43,43 +43,80 @@ end
 -- @param ply       The player to check
 -- @param callback  The callback to run when complete
 function SGRF.CheckPlayer(ply, callback)
-	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. "&steamid=" .. ply:SteamID64()
+	local steamid64 = ply:SteamID64()
+	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. "&steamid=" .. steamid64
 
 	http.Fetch(url,
 		function(body, len, headers, code)
 			SGRF.Log('TRACE', body)
 			data = util.JSONToTable(body)
-			if data.response.success == true then
-				local inGroup = false
+			if data and data.response.success == true then
+				ply.InGroup = false
 				
-				for k,v in pairs(data.response.groups) do
+				for k, v in pairs(data.response.groups) do
 					if v.gid == SGRF.Config.SteamGroup then
-						inGroup = true
+						ply.InGroup = true
 						break
 					end
 				end
-				
-				if inGroup then
+
+				if ply.InGroup then
 					SGRF.Log('DEBUG', 'Player %s (%s) is in group.', ply:Nick(), ply:SteamID())
-					ply.InGroup = true
 
 					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
 						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
 					end
 				else
 					SGRF.Log('DEBUG', 'Player %s (%s) is not in group.', ply:Nick(), ply:SteamID())
-					ply.InGroup = false
 
 					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then
 						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
 						ply:SetPData('SGRF_InSteamGroup', 'false')
 					end
 				end
-			else
-				SGRF.Log('DEBUG', 'Request failed for player %s (%s) - %s: %s (%s)', ply:Nick(), ply:SteamID(), data.status, data.message, data.comment)
-			end
 
-			callback(ply)
+				callback(ply)
+			else
+				SGRF.Log('DEBUG', 'Steam API check failed for player %s (%s) - attempting fallback XML method...', ply:Nick(), ply:SteamID())
+
+				local url = 'http://steamcommunity.com/gid/' .. SGRF.Config.SteamGroup .. '/memberslistxml/?xml=1'
+
+				http.Fetch(url,
+					function(body, len, headers, code)
+						ply.InGroup = false
+
+						parser = SGRF.Lib.SLAXML:parser{
+							text = function(text)
+								if tonumber(text) and tonumber(text) == steamid64 then
+									SGRF.Log('INFO', 'Player %s (%s) is in group according to XML API', ply:Nick(), ply:SteamID())
+									ply.InGroup = true
+								end
+							end
+						}
+
+						parser:parse(body, {stripWhitespace = true})
+
+						if ply.InGroup then
+							SGRF.Log('DEBUG', 'Player %s (%s) is in group (XML APOI).', ply:Nick(), ply:SteamID())
+
+							if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+								SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
+							end
+						else
+							SGRF.Log('DEBUG', 'Player %s (%s) is not in group (XML API).', ply:Nick(), ply:SteamID())
+
+							if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then
+								SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
+								ply:SetPData('SGRF_InSteamGroup', 'false')
+							end
+						end
+
+						callback(ply)
+					end,
+					function(error)
+						SGRF.Log('ERROR', 'Fallback API check failed with code %s', error)
+					end)
+			end
 		end,
 		function(error)
 			SGRF.Log('ERROR', 'API check failed with code %s', error)
