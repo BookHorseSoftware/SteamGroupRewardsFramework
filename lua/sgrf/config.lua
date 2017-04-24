@@ -3,7 +3,7 @@
 
 General configuration options.
 --------------------------]]--
-SGRF.Config = {} -- DO NOT TOUCH ME
+SGRF.Config = SGRF.Config or {} -- DO NOT TOUCH ME
 
 --- Commands to open the Steam group page
 -- These commands may be used in chat to open the Steam group page for the group designated
@@ -30,7 +30,7 @@ SGRF.Config.SteamAPIKey = 'CHANGE ME'
 
 Add your custom rewards here!
 -------------------------]]--
-SGRF.Rewards = {} -- DO NOT TOUCH ME
+SGRF.Rewards = SGRF.Rewards or {} -- DO NOT TOUCH ME
 
 -- Add your custom rewards here!
 -- NOTE: The PData variable SGRF_InSteamGroup may be used to grant external rewards (PAC3 access, etc).

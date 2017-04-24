@@ -4,30 +4,18 @@ if SERVER then
 	util.AddNetworkString('SGRF_ColoredChatPrint')
 
 	local function AddCSLuaFiles(dir)
-		local files, dirs = file.Find(dir .. '/*', 'LUA')
-
-		for _, dir in pairs(dirs) do
-			AddCSLuaFiles(dir)
-		end
+		local files, folders = file.Find(dir .. "*", "LUA")
 
 		for _, file in pairs(files) do
-			AddCSLuaFile(file)
+			AddCSLuaFile(dir .. file)
+		end
+
+		for _, folder in pairs(folders) do
+			AddCSLuaFiles(dir .. folder .. "/")
 		end
 	end
 
 	AddCSLuaFiles('sgrf/client')
-
-	SGRF = {}
-	SGRF.Lib = {}
-	SGRF.Lib.SLAXML = include('sgrf/server/lib/slaxml.lua')
-
-	include('sgrf/config.lua')
-	include('sgrf/server/sv_functions.lua')
-	include('sgrf/server/sv_hooks.lua')
-	
-	SGRF.Log('DEBUG', 'SteamGruopRewardsFramework loaded successfully!')
 end
 
-if CLIENT then
-	include('sgrf/client/cl_netmessages.lua')
-end
+include('sgrf/init.lua')
