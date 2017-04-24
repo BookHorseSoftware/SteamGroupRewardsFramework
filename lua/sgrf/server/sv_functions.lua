@@ -85,16 +85,39 @@ function SGRF.CheckPlayer(ply, callback)
 					function(body, len, headers, code)
 						ply.InGroup = false
 
-						parser = SGRF.Lib.SLAXML:parser{
-							text = function(text)
-								if tonumber(text) and tonumber(text) == steamid64 then
-									SGRF.Log('INFO', 'Player %s (%s) is in group according to XML API', ply:Nick(), ply:SteamID())
-									ply.InGroup = true
-								end
-							end
-						}
+						doc = SGRF.Lib.SLAXML:dom(body)
 
-						parser:parse(body, {stripWhitespace = true})
+						-- This is nasty, yes. But it works!
+						SGRF.Log('DEBUG', 'Beginning body traversal...')
+						for _, child in pairs(doc.kids) do
+							SGRF.Log('DEBUG', '%d: %s (%s) encountered', _, child.name, child.type)
+							if child.type == 'element' and child.name == 'memberList' then -- root element
+								SGRF.Log('DEBUG', 'Found root element')
+								for __, child2 in pairs(child.el) do
+									SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', _, __, child2.name, child2.type)
+									if child2.name == 'members' then -- members list
+										SGRF.Log('DEBUG', 'Found members element')
+										for ___, member in pairs(child2.el) do
+											SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', _, __, ___, member.name, member.type)
+											if member.type == 'element' and member.name == 'steamID64' then
+												el = member.kids[1]
+												val = el.value
+												SGRF.Log('DEBUG', 'Found %s (%s) with value %s', el.name, el.type, el.value)
+												SGRF.Log('DEBUG', 'Found %s as value of steamID64 element', val)
+
+												if el.value == steamid64 or val == steamid64 then
+													SGRF.Log('DEBUG', 'Found matching steamID64 element')
+													ply.InGroup = true
+													break
+												end
+											end
+										end
+										break
+									end
+								end
+								break
+							end
+						end
 
 						if ply.InGroup then
 							SGRF.Log('DEBUG', 'Player %s (%s) is in group (XML APOI).', ply:Nick(), ply:SteamID())
@@ -170,4 +193,3 @@ function SGRF.ColoredChatBroadcast(...)
 		net.WriteTable(args)
 	net.Broadcast()
 end
-
