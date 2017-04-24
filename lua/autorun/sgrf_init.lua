@@ -1,5 +1,7 @@
 if SERVER then
 	AddCSLuaFile()
+	AddCSLuaFile('sgrf/init.lua')
+	
 	util.AddNetworkString('SGRF_OpenSteamGroup')
 	util.AddNetworkString('SGRF_ColoredChatPrint')
 
