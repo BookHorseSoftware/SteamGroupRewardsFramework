@@ -17,7 +17,7 @@ if SERVER then
 		end
 	end
 
-	AddCSLuaFiles('sgrf/client')
+	AddCSLuaFiles('sgrf/client/')
 end
 
 include('sgrf/init.lua')
