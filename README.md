@@ -71,7 +71,7 @@ SGRF.Rewards.Name = {
 
 ### Rewards outside of callbacks
 
-This addon also makes use of PData. To grant rewards outside of those available in callbacks, _ie_ PAC3 access or hook-related rewards, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
 
 ### Global functions
 
