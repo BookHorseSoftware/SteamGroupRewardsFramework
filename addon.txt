@@ -1,0 +1,10 @@
+"AddonInfo"
+{
+	"name"			"Steam Group Rewards Framework"
+	"version"		"1.0.0"
+	"up_date"		""
+	"author_name"	"Book Horse Software"
+	"author_email"	""
+	"author_url"	""
+	"info"			""
+}
