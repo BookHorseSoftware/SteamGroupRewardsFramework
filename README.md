@@ -11,6 +11,9 @@ SteamGroupRewardsFramework is a dead-simple, FOSS framework for granting users o
 - [Install](#install)
 - [Configuration](#configuration)
 - [Usage](#usage)
+  - [Adding new rewards](#adding-new-rewards)
+  - [Rewards outside of callbacks](#rewards-outside-of-callbacks)
+  - [Global functions](#global-functions)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
@@ -39,6 +42,8 @@ General configuration may be found under the **GENERAL SETTINGS** header in `lua
 
 ## Usage
 
+### Adding new rewards
+
 To add new rewards, edit `lua/sgrf/config.lua`. Under the **REWARDS SETTINGS** header, and under `SGRF.Rewards = {}`, add your custom rewards. Use the following format:
 
 ```lua
@@ -64,7 +69,48 @@ SGRF.Rewards.Name = {
 
   The callback to run to handle this reward. Takes `ply` as a parameter, which is the player currently being rewarded.
 
-This addon also makes use of PData. To grant rewards outside of those available in callbacks, _ie_ PAC3 access or hook-related rewards, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+### Rewards outside of callbacks
+
+This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+
+### Global functions
+
+- `SGRF.RewardPlayer(ply)` - **SERVERSIDE**
+
+  Manually rechecks a player and rewards them accordingly. This is called on spawn, or when a player returns from using the configured Steam group commands.
+  
+  - `ply` - The player to check and reward (if applicable)
+  
+- `SGRF.CheckPlayer(ply, callback)` - **SERVERSIDE**
+
+  Manually rechecks a player's group membership status. The bulk of the processing goes on here.
+  
+  We recommend using the PData variable mentioned in [Rewards outside of callbacks](#rewards-outside-of-callbacks) if you want to implement your own rewards that can't be handled by callbacks. However, if you find a use for this function, go right ahead and use it.
+  
+  - `ply` - The player to check
+  - `callback` - The callback to run once operations are complete
+    - `ply` - The player object from earlier, for convenience
+
+- `SGRF.Log(channel, _str, ...)` - **SERVERSIDE**
+
+  Writes a log message to the server console prefixed with the given channel. Uses `string.format` internally.
+  
+  - `channel` - The channel to write to
+  - `_str` - The string to write (may use `string.format`-style format strings)
+  - `...` - Additional arguments for `string.format`
+  
+- `SGRF.ColoredChatPrint(ply, ...)` - **SERVERSIDE**
+
+  Writes a prefixed, colored chat message to a given player's chat. Uses `chat.AddText` internally.
+  
+  - `ply` - The player to write the chat message to
+  - `...` - A set of `Color`s and `string`s to pass to `chat.AddText`
+
+- `SGRF.ColoredChatBroadcast(...)` - **SERVERSIDE**
+
+  Writes a prefixed, colored chat message to every player on the server's chat. Uses `chat.AddText` internally.
+  
+  - `...` - A set of `Color`s and `string`s to pass to `chat.AddText`
 
 ## Maintainers
 
