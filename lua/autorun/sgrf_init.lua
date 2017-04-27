@@ -1,19 +1,19 @@
 if SERVER then
 	AddCSLuaFile()
 	AddCSLuaFile('sgrf/init.lua')
-	
+
 	util.AddNetworkString('SGRF_OpenSteamGroup')
 	util.AddNetworkString('SGRF_ColoredChatPrint')
 
 	local function AddCSLuaFiles(dir)
-		local files, folders = file.Find(dir .. "*", "LUA")
+		local files, folders = file.Find(dir .. '*', 'LUA')
 
-		for _, file in pairs(files) do
-			AddCSLuaFile(dir .. file)
+		for _, luafile in pairs(files) do
+			AddCSLuaFile(dir .. luafile)
 		end
 
-		for _, folder in pairs(folders) do
-			AddCSLuaFiles(dir .. folder .. "/")
+		for _, luadir in pairs(folders) do
+			AddCSLuaFiles(dir .. luadir .. '/')
 		end
 	end
 

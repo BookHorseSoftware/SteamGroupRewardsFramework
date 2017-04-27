@@ -44,15 +44,15 @@ end
 -- @param callback  The callback to run when complete
 function SGRF.CheckPlayer(ply, callback)
 	local steamid64 = ply:SteamID64()
-	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. "&steamid=" .. steamid64
+	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. '&steamid=' .. steamid64
 
 	http.Fetch(url,
-		function(body, len, headers, code)
+		function(body, _, _, _)
 			SGRF.Log('TRACE', body)
 			data = util.JSONToTable(body)
 			if data and data.response.success == true then
 				ply.InGroup = false
-				
+
 				for k, v in pairs(data.response.groups) do
 					if v.gid == SGRF.Config.SteamGroup then
 						ply.InGroup = true
@@ -79,10 +79,10 @@ function SGRF.CheckPlayer(ply, callback)
 			else
 				SGRF.Log('DEBUG', 'Steam API check failed for player %s (%s) - attempting fallback XML method...', ply:Nick(), ply:SteamID())
 
-				local url = 'http://steamcommunity.com/gid/' .. SGRF.Config.SteamGroup .. '/memberslistxml/?xml=1'
+				local xmlUrl = 'http://steamcommunity.com/gid/' .. SGRF.Config.SteamGroup .. '/memberslistxml/?xml=1'
 
-				http.Fetch(url,
-					function(body, len, headers, code)
+				http.Fetch(xmlUrl,
+					function(xml, _, _, _)
 						ply.InGroup = false
 
 						doc = SGRF.Lib.SLAXML:dom(body)
@@ -94,7 +94,7 @@ function SGRF.CheckPlayer(ply, callback)
 							if child.type == 'element' and child.name == 'memberList' then -- root element
 								SGRF.Log('DEBUG', 'Found root element')
 								for __, child2 in pairs(child.el) do
-									SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', _, __, child2.name, child2.type)
+									SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', _, __, child2.name, child2.type) -- shut up about my code pyramids glualint :(
 									if child2.name == 'members' then -- members list
 										SGRF.Log('DEBUG', 'Found members element')
 										for ___, member in pairs(child2.el) do
