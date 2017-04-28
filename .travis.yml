@@ -1,0 +1,9 @@
+language: generic
+sudo: false
+before_install:
+  - 'wget http://ci-tool.antigravities.net/glualint/glualint -O $PWD/glualint'
+  - 'chmod +x $PWD/glualint'
+install: true
+script:
+  - 'find lua -type f -not -path "lua/sgrf/server/lib/*" -exec $PWD/glualint {} + | tee output.txt'
+  - 'if [ $(grep "\[Error\]" "$PWD/output.txt" | wc -w) != "0" ]; then return 1; else return 0; fi;'
