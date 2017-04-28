@@ -1,6 +1,6 @@
 # SteamGroupRewardsFramework
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) [![Build Status](https://travis-ci.org/BookHorseSoftware/SteamGroupRewardsFramework.svg?branch=master)](https://travis-ci.org/BookHorseSoftware/SteamGroupRewardsFramework)
 
 > A super-simple framework for granting users rewards for joining your Steam group.
 
