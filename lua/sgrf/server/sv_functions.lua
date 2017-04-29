@@ -99,13 +99,10 @@ function SGRF.CheckPlayer(ply, callback)
 										SGRF.Log('DEBUG', 'Found members element')
 										for ___, member in pairs(child2.el) do
 											SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', _, __, ___, member.name, member.type)
-											if member.type == 'element' and member.name == 'steamID64' then
-												el = member.kids[1]
-												val = el.value
-												SGRF.Log('DEBUG', 'Found %s (%s) with value %s', el.name, el.type, el.value)
-												SGRF.Log('DEBUG', 'Found %s as value of steamID64 element', val)
+											if member.name == 'steamID64' then
+												SGRF.Log('DEBUG', 'Found steamID64 element with value %s', el.value)
 
-												if el.value == steamid64 or val == steamid64 then
+												if el.value == steamid64 then
 													SGRF.Log('DEBUG', 'Found matching steamID64 element')
 													ply.InGroup = true
 													break
