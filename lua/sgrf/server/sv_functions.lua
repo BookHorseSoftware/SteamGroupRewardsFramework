@@ -120,7 +120,7 @@ function SGRF.CheckPlayer(ply, callback)
 						end
 
 						if ply.InGroup then
-							SGRF.Log('DEBUG', 'Player %s (%s) is in group (XML APOI).', ply:Nick(), ply:SteamID())
+							SGRF.Log('DEBUG', 'Player %s (%s) is in group (XML API).', ply:Nick(), ply:SteamID())
 
 							if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
 								SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
