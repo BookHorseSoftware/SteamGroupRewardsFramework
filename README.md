@@ -71,7 +71,9 @@ SGRF.Rewards.Name = {
 
 ### Rewards outside of callbacks
 
-This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, use the helper function `SGRF.IsPlayerInGroup(ply)` documented below.
+
+Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
 
 ### Global functions
 
@@ -90,6 +92,14 @@ This addon also makes use of PData. To grant rewards outside of those available 
   - `ply` - The player to check
   - `callback` - The callback to run once operations are complete
     - `ply` - The player object from earlier, for convenience
+
+- `SGRF.IsPlayerInGroup(ply)` - **SERVERSIDE**
+
+  Checks the given player's Steam group status with PData.
+
+  Does not poll any external APIs, just checks the data we've already pulled. Helper function to work around PData's annoying use of strings.
+
+  - `ply` - The player to check
 
 - `SGRF.Log(channel, _str, ...)` - **SERVERSIDE**
 

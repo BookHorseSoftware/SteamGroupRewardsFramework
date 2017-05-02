@@ -1,3 +1,11 @@
+--- Checks the given player's Steam group status with PData
+-- Does not poll any external APIs, just checks the data we've already pulled.
+-- Helper function to work around PData's annoying use of strings.
+-- @param ply The player to check
+function SGRF.IsPlayerInGroup(ply)
+	return ply:GetPData('SGRF_InSteamGroup', 'false') == 'true'
+end
+
 --- Checks the given player for Steam group status and rewards them accordingly.
 -- Checks to make sure the player has joined or left the Steam group, and grants all appropriate rewards.
 -- Will also grant any one-time rewards added *after* the player joined the Steam group should they not
@@ -23,7 +31,7 @@ function SGRF.RewardPlayer(ply)
 			data.Callback(ply)
 		end
 
-		if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+		if not SGRF.IsPlayerInGroup(ply) then
 			ply:SetPData('SGRF_InSteamGroup', 'true')
 			SGRF.ColoredChatPrint(ply, 'Thank you for joining our Steam group!')
 
@@ -63,13 +71,13 @@ function SGRF.CheckPlayer(ply, callback)
 				if ply.InGroup then
 					SGRF.Log('DEBUG', 'Player %s (%s) is in group.', ply:Nick(), ply:SteamID())
 
-					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+					if not SGRF.IsPlayerInGroup(ply) then
 						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
 					end
 				else
 					SGRF.Log('DEBUG', 'Player %s (%s) is not in group.', ply:Nick(), ply:SteamID())
 
-					if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then
+					if SGRF.IsPlayerInGroup(ply) then
 						SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
 						ply:SetPData('SGRF_InSteamGroup', 'false')
 					end
@@ -119,13 +127,13 @@ function SGRF.CheckPlayer(ply, callback)
 						if ply.InGroup then
 							SGRF.Log('DEBUG', 'Player %s (%s) is in group (XML API).', ply:Nick(), ply:SteamID())
 
-							if ply:GetPData('SGRF_InSteamGroup', 'false') == 'false' then
+							if not SGRF.IsPlayerInGroup(ply) then
 								SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
 							end
 						else
 							SGRF.Log('DEBUG', 'Player %s (%s) is not in group (XML API).', ply:Nick(), ply:SteamID())
 
-							if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then
+							if SGRF.IsPlayerInGroup(ply) then
 								SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
 								ply:SetPData('SGRF_InSteamGroup', 'false')
 							end
