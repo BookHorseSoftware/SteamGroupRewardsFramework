@@ -101,6 +101,13 @@ Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, how
 
   - `ply` - The player to check
 
+- `SGRF.HasPlayerExhaustedReward(ply, reward)` - **SERVERSIDE**
+
+  Checks if the given player has exhausted the given one-time reward.
+
+  - `ply` - The player to check
+  - `reward` - The name of the reward to look for
+
 - `SGRF.Log(channel, _str, ...)` - **SERVERSIDE**
 
   Writes a log message to the server console prefixed with the given channel. Uses `string.format` internally.

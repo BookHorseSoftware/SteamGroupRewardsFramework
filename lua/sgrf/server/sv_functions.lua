@@ -6,6 +6,13 @@ function SGRF.IsPlayerInGroup(ply)
 	return ply:GetPData('SGRF_InSteamGroup', 'false') == 'true'
 end
 
+--- Checks if the given player has exhausted the given one-time reward.
+-- @param ply    The player to check
+-- @param reward The name of the reward to look for
+function SGRF.HasPlayerExhaustedReward(ply, reward)
+	return ply:GetPData('SGRF_ExhaustedOneTimeReward_' .. reward, 'false') == 'true'
+end
+
 --- Checks the given player for Steam group status and rewards them accordingly.
 -- Checks to make sure the player has joined or left the Steam group, and grants all appropriate rewards.
 -- Will also grant any one-time rewards added *after* the player joined the Steam group should they not
@@ -21,7 +28,7 @@ function SGRF.RewardPlayer(ply)
 
 		for name, data in pairs(SGRF.Rewards) do
 			if data.OneTime then
-				if ply:GetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'false') == 'true' then continue end
+				if SGRF.HasPlayerExhaustedReward(ply, name) then continue end
 				ply:SetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'true')
 			else
 				if SGRF.IsInSteamGroup(ply) then continue end
