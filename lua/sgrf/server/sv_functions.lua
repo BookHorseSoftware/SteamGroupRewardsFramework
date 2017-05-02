@@ -1,4 +1,4 @@
---- Checks the given player's Steam group status with PData
+--- Checks the given player's Steam group status with PData.
 -- Does not poll any external APIs, just checks the data we've already pulled.
 -- Helper function to work around PData's annoying use of strings.
 -- @param ply The player to check
@@ -24,7 +24,7 @@ function SGRF.RewardPlayer(ply)
 				if ply:GetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'false') == 'true' then continue end
 				ply:SetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'true')
 			else
-				if ply:GetPData('SGRF_InSteamGroup', 'false') == 'true' then continue end
+				if SGRF.IsInSteamGroup(ply) then continue end
 			end
 
 			SGRF.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())
