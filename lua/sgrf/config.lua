@@ -33,9 +33,11 @@ Add your custom rewards here!
 SGRF.Rewards = SGRF.Rewards or {} -- DO NOT TOUCH ME
 
 -- Add your custom rewards here!
--- NOTE: The PData variable SGRF_InSteamGroup may be used to grant external rewards (PAC3 access, etc).
--- Rewards that cannot be covered by callbacks like these should use Player:GetPData('SGRF_InSteamGroup', 'false') == 'true'
--- to determine if a user is in the Steam group or not.
+-- To grant rewards outside of those available in callbacks, eg PAC3 access or hook-related rewards,
+-- use the helper function SGRF.IsPlayerInGroup(ply) documented below.
+-- Alternatively, you may use the PData variable SGRF_InSteamGroup. NOTE, however, that Player:GetPData
+-- (annoyingly) returns strings, so you will have to check if the returned value equals the STRING 'true'
+-- if the player is in the group or the STRING 'false' if the player is not in the group.
 
 -- TO ADD NEW REWARDS, use the template below.
 --[===[
