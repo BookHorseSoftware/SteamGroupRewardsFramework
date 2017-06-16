@@ -27,7 +27,7 @@ if SERVER then
 	-- Load our config
 	include('config.lua')
 
-	for _, required in {'SteamGroup', 'SteamAPIKey'} do
+	for _, required in pairs({'SteamGroup', 'SteamAPIKey'}) do
 		if SGRF.Config[required] == "CHANGE ME" then
 			SGRF.Log('CRITICAL', 'SGRF.Config.%s not set! Please set this value in lua/sgrf/config.lua before using SGRF!', required)
 			return
