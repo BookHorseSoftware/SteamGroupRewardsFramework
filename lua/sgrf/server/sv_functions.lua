@@ -104,16 +104,16 @@ function SGRF.CheckPlayer(ply, callback)
 
 						-- This is nasty, yes. But it works!
 						SGRF.Log('DEBUG', 'Beginning body traversal...')
-						for _, child in pairs(doc.kids) do
-							SGRF.Log('DEBUG', '%d: %s (%s) encountered', _, child.name, child.type)
+						for k, child in pairs(doc.kids) do
+							SGRF.Log('DEBUG', '%d: %s (%s) encountered', k, child.name, child.type)
 							if child.type == 'element' and child.name == 'memberList' then -- root element
 								SGRF.Log('DEBUG', 'Found root element')
-								for __, child2 in pairs(child.el) do
-									SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', _, __, child2.name, child2.type) -- shut up about my code pyramids glualint :(
+								for k2, child2 in pairs(child.el) do
+									SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', k, k2, child2.name, child2.type) -- shut up about my code pyramids glualint :(
 									if child2.name == 'members' then -- members list
 										SGRF.Log('DEBUG', 'Found members element')
-										for ___, member in pairs(child2.el) do
-											SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', _, __, ___, member.name, member.type)
+										for k3, member in pairs(child2.el) do
+											SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', k, k2, k3, member.name, member.type)
 											if member.name == 'steamID64' then
 												SGRF.Log('DEBUG', 'Found steamID64 element with value %s', el.value)
 
