@@ -25,6 +25,11 @@ SGRF.Config.SteamGroup = 'CHANGE ME'
 -- You can get this at https://steamcommunity.com/dev/apikey.
 SGRF.Config.SteamAPIKey = 'CHANGE ME'
 
+--- Should DEBUG-level log messages be printed?
+-- You should really only set this to true if asked to by the developers. This will cause a lot of
+-- console spam.
+SGRF.Config.LogDebugMessages = false
+
 --[[-------------------------
        REWARDS SETTINGS
 
