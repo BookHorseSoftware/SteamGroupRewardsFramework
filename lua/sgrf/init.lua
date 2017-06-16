@@ -27,6 +27,8 @@ if SERVER then
 	-- Load our config
 	include('config.lua')
 
+	include('server/sv_functions.lua')
+
 	for _, required in pairs({'SteamGroup', 'SteamAPIKey'}) do
 		if SGRF.Config[required] == "CHANGE ME" then
 			SGRF.Log('CRITICAL', 'SGRF.Config.%s not set! Please set this value in lua/sgrf/config.lua before using SGRF!', required)
@@ -35,7 +37,6 @@ if SERVER then
 	end
 
 	-- Load other files
-	include('server/sv_functions.lua')
 	include('server/sv_hooks.lua')
 
 	-- We're done!
