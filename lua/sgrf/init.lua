@@ -24,13 +24,22 @@ if SERVER then
 	SGRF.Lib = SGRF.Lib or {}
 	SGRF.Lib.SLAXML = SGRF.Lib.SLAXML or include('server/lib/slaxml.lua')
 
-	-- Load other files
+	-- Load our config
 	include('config.lua')
+
+	for _, required in pairs({'SteamGroup', 'SteamAPIKey'}) do
+		if SGRF.Config[required] == "CHANGE ME" then
+			SGRF.Log('CRITICAL', 'SGRF.Config.%s not set! Please set this value in lua/sgrf/config.lua before using SGRF!', required)
+			return
+		end
+	end
+
+	-- Load other files
 	include('server/sv_functions.lua')
 	include('server/sv_hooks.lua')
 
 	-- We're done!
-	SGRF.Log('DEBUG', 'SteamGruopRewardsFramework loaded successfully!')
+	SGRF.Log('INFO', 'SteamGruopRewardsFramework loaded successfully!')
 end
 
 if CLIENT then
