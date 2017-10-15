@@ -13,7 +13,7 @@ SteamGroupRewardsFramework is a dead-simple, FOSS framework for granting users o
 - [Usage](#usage)
   - [Adding new rewards](#adding-new-rewards)
   - [Rewards outside of callbacks](#rewards-outside-of-callbacks)
-  - [Global functions](#global-functions)
+- [API](#api)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
@@ -71,9 +71,11 @@ SGRF.Rewards.Name = {
 
 ### Rewards outside of callbacks
 
-This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, use the helper function `SGRF.IsPlayerInGroup(ply)` documented below.
+This addon also makes use of PData. To grant rewards outside of those available in callbacks, _eg_ PAC3 access or hook-related rewards, use the helper function `SGRF.IsPlayerInGroup(ply)` documented in [API](#api).
 
 Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
+
+## API
 
 ### Global functions
 
