@@ -163,7 +163,7 @@ end
 -- @param      _str     The string to write to the log
 -- @param[opt] ...      Anything to pass to string.format
 function SGRF.Log(channel, _str, ...)
-	if channel == 'DEBUG' and not SGRF.Config.LogDebugMessages then return end
+	if (channel == 'DEBUG' or channel == 'TRACE') and not SGRF.Config.LogDebugMessages then return end
 
 	local str = _str
 	if ... then
