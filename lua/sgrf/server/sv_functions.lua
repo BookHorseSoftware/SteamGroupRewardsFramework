@@ -31,7 +31,7 @@ function SGRF.RewardPlayer(ply)
 				if SGRF.HasPlayerExhaustedReward(ply, name) then continue end
 				ply:SetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'true')
 			else
-				if SGRF.IsInSteamGroup(ply) then continue end
+				if SGRF.IsPlayerInGroup(ply) then continue end
 			end
 
 			SGRF.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())
