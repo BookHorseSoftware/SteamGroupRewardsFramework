@@ -47,8 +47,9 @@ SGRF.Rewards = SGRF.Rewards or {} -- DO NOT TOUCH ME
 -- TO ADD NEW REWARDS, use the template below.
 --[===[
 SGRF.Rewards.Name = {
-	OneTime  = true,
-	Callback = function(ply)
+	OneTime   = true,
+	Recurring = true,
+	Callback  = function(ply)
 
 	end,
 }

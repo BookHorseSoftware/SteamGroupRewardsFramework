@@ -19,8 +19,9 @@ end
 -- have them. Does not repeat rewards. If a one-time reward has already been granted, this function will
 -- skip it. If it's a recurring reward for users that leave/join a group, they will only be granted the
 -- reward if their group status changes from LEFT to JOINED.
--- @param ply  The player to reward
-function SGRF.RewardPlayer(ply)
+-- @param ply                   The player to reward
+-- @param skipRecurringRewards  Whether or not to skip rewards marked as Recurring; typically, these should only be granted on PlayerInitialSpawn, and avoided in situations like the Steam group command idle check hook
+function SGRF.RewardPlayer(ply, skipRecurringRewards)
 	SGRF.CheckPlayer(ply, function(ply)
 		if not ply.InGroup then return end
 
@@ -28,10 +29,17 @@ function SGRF.RewardPlayer(ply)
 
 		for name, data in pairs(SGRF.Rewards) do
 			if data.OneTime then
+				if data.Recurring then
+					SGRF.Log('ERROR', 'Reward %s is both Recurring and OneTime. It can only be one or the other. Skipping...')
+					continue
+				end
+
 				if SGRF.HasPlayerExhaustedReward(ply, name) then continue end
 				ply:SetPData('SGRF_ExhaustedOneTimeReward_' .. name, 'true')
 			else
-				if SGRF.IsPlayerInGroup(ply) then continue end
+				if not data.Recurring or skipRecurringRewards then
+					if SGRF.IsPlayerInGroup(ply) then continue end
+				end
 			end
 
 			SGRF.Log('DEBUG', 'Granting reward %s to player %s', name, ply:Nick())

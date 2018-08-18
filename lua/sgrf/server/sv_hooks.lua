@@ -15,7 +15,7 @@ hook.Add('PlayerSay', 'SGRF - Steam Group Command', steamGroupCommand)
 
 local function checkIfJoinedGroup(ply)
 	if ply.inSteamGroupUI then
-		SGRF.RewardPlayer(ply)
+		SGRF.RewardPlayer(ply, true)
 
 		ply.inSteamGroupUI = false
 	end

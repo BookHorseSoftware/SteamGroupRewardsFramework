@@ -31,7 +31,7 @@ General configuration may be found under the **GENERAL SETTINGS** header in `lua
 - `SGRF.Config.Commands`
 
   An array of possible chat commands to open the Steam group page. Note that these chat commands **also** check to see if the user has joined the Steam group upon re-entering the game, so it is best to remove any Steam group commands from other addons if possible. Set to an empty array to disable the command.
-  
+
 - `SGRF.Config.SteamGroup`
 
   The group ID to check for player membership. It's the numbers (YYYYYY) in http://steamcommunity.com/gid/YYYYYY. This number can also be found in your group's "edit profile" section.
@@ -48,10 +48,11 @@ To add new rewards, edit `lua/sgrf/config.lua`. Under the **REWARDS SETTINGS** h
 
 ```lua
 SGRF.Rewards.Name = {
-	OneTime  = false,
-	Callback = function(ply)
-		-- Your code goes here!
-	end,
+    OneTime   = false,
+    Recurring = false,
+    Callback  = function(ply)
+        -- Your code goes here!
+    end,
 }
 ```
 
@@ -60,10 +61,16 @@ SGRF.Rewards.Name = {
 - `Name`
 
   The name to give this reward. Used internally in logging messages, but is still required. To use characters not supported by Lua's `.` syntax, replace the period with square brackets `[]` and add your name between quotes (`''` or `""`) inside them.
-  
+
 - `OneTime`
 
   Designates whether or not this reward is only redeemable once (ie, if the user leaves and rejoins the group, they will not receive this reward again). Set this to `true` to enable this feature, or leave it as `false` to grant the reward every time they join.
+
+- `Recurring`
+
+  Designates whether or not this reward is redeemable every time the user connects to the server, instead of only the first time the addon checks. Typically, rewards will only be granted when the user connects to the server for the first time after joining the Steam group, or if they join the Steam group through the in-game chat command for SGRF. Set this to `true` to enable this feature, or leave it as `false` to only grant the user the reward on the **first check** after the user joins.
+
+  **NOTE:** Setting both `OneTime` and `Recurring` is **invalid** and will cause SGRF to skip the reward until the invalid state is fixed.
 
 - `Callback`
 
@@ -82,15 +89,15 @@ Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, how
 - `SGRF.RewardPlayer(ply)` - **SERVERSIDE**
 
   Manually rechecks a player and rewards them accordingly. This is called on spawn, or when a player returns from using the configured Steam group commands.
-  
+
   - `ply` - The player to check and reward (if applicable)
-  
+
 - `SGRF.CheckPlayer(ply, callback)` - **SERVERSIDE**
 
   Manually rechecks a player's group membership status. The bulk of the processing goes on here.
-  
+
   We recommend using the PData variable mentioned in [Rewards outside of callbacks](#rewards-outside-of-callbacks) if you want to implement your own rewards that can't be handled by callbacks. However, if you find a use for this function, go right ahead and use it.
-  
+
   - `ply` - The player to check
   - `callback` - The callback to run once operations are complete
     - `ply` - The player object from earlier, for convenience
@@ -113,22 +120,22 @@ Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, how
 - `SGRF.Log(channel, _str, ...)` - **SERVERSIDE**
 
   Writes a log message to the server console prefixed with the given channel. Uses `string.format` internally.
-  
+
   - `channel` - The channel to write to
   - `_str` - The string to write (may use `string.format`-style format strings)
   - `...` - Additional arguments for `string.format`
-  
+
 - `SGRF.ColoredChatPrint(ply, ...)` - **SERVERSIDE**
 
   Writes a prefixed, colored chat message to a given player's chat. Uses `chat.AddText` internally.
-  
+
   - `ply` - The player to write the chat message to
   - `...` - A set of `Color`s and `string`s to pass to `chat.AddText`
 
 - `SGRF.ColoredChatBroadcast(...)` - **SERVERSIDE**
 
   Writes a prefixed, colored chat message to every player on the server's chat. Uses `chat.AddText` internally.
-  
+
   - `...` - A set of `Color`s and `string`s to pass to `chat.AddText`
 
 ## Maintainers
