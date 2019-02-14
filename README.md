@@ -82,6 +82,20 @@ This addon also makes use of PData. To grant rewards outside of those available 
 
 Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, however, that `Player:GetPData` (annoyingly) returns `string`s, so you will have to check if the returned value equals the **STRING** `'true'` if the player is in the group or the **STRING** `'false'` if the player is **not** in the group.
 
+#### Example: PAC3 restriction
+
+Modify the following script to fit your needs, and place it somewhere in `lua/autorun/`. This will prevent users from accessing the PAC editor and loading their outfits until they've joined the Steam group.
+
+```lua
+local function restrictPAC3(ply)
+    if not SGRF.IsPlayerInGroup(ply) then
+        return false, "You must join the Steam group before you can use PAC3! (see !sg)"
+    end
+end
+hook.Add('PrePACConfigApply', 'SGRF - PAC3 Restriction', restrictPAC3)
+hook.Add('PrePACEditorOpen', 'SGRF - PAC3 Restriction', restrictPAC3)
+```
+
 ## API
 
 ### Global functions
