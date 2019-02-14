@@ -85,7 +85,7 @@ Alternatively, you may use the PData variable `SGRF_InSteamGroup`. **NOTE**, how
 
 #### Example: PAC3 restriction
 
-Modify the following script to fit your needs, and place it somewhere in `lua/autorun/`. This will prevent users from accessing the PAC editor and loading their outfits until they've joined the Steam group.
+Modify the following script to fit your needs, and place it somewhere in `lua/autorun/server/`. This will prevent users from accessing the PAC editor and loading their outfits until they've joined the Steam group.
 
 ```lua
 local function restrictPAC3(ply)
