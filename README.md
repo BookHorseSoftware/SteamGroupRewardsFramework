@@ -13,6 +13,7 @@ SteamGroupRewardsFramework is a dead-simple, FOSS framework for granting users o
 - [Usage](#usage)
   - [Adding new rewards](#adding-new-rewards)
   - [Rewards outside of callbacks](#rewards-outside-of-callbacks)
+    - [Example: PAC3 restriction](#example-pac3-restriction)
 - [API](#api)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
