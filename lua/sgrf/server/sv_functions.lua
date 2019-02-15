@@ -63,6 +63,7 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 		function(xml, _, _, _)
 			ply.InGroup = false
 			local nextPageLink
+			local traversedMembers = false
 
 			doc = SGRF.Lib.SLAXML:dom(body)
 
@@ -77,8 +78,10 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 						if child.name == 'nextPageLink' then
 							SGRF.Log('DEBUG', 'Found next page link')
 							nextPageLink = child.kids[0].value
+							if traversedMembers then break end -- prevent one from overstepping the other
 						elseif child2.name == 'members' then -- members list
 							SGRF.Log('DEBUG', 'Found members element')
+							traversedMembers = true
 							for k3, member in pairs(child2.el) do
 								SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', k, k2, k3, member.name, member.type)
 								if member.name == 'steamID64' then
@@ -91,7 +94,7 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 									end
 								end
 							end
-							break
+							if nextPageLink then break end -- prevent one from overstepping the other
 						end
 					end
 					break
