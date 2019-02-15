@@ -71,7 +71,7 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 			for k, child in pairs(doc.kids) do
 				SGRF.Log('DEBUG', '%d: %s (%s) encountered', k, child.name, child.type)
 				if child.type == 'element' and child.name == 'nextPageLink' then
-				SGRF.Log('DEBUG', 'Found next page')
+					SGRF.Log('DEBUG', 'Found next page link')
 					nextPageLink = child.kids[0].value
 				elseif child.type == 'element' and child.name == 'memberList' then -- root element
 					SGRF.Log('DEBUG', 'Found root element')
