@@ -104,6 +104,8 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 				if not SGRF.IsPlayerInGroup(ply) then
 					SGRF.Log('DEBUG', 'Player %s (%s) group status changed (JOINED)!', ply:Nick(), ply:SteamID())
 				end
+
+				callback(ply)
 			elseif nextPageLink then
 				SGRF.Log('DEBUG', 'Player %s (%s) not found on page "%s"', ply:Nick(), ply:SteamID(), xmlUrl)
 				recursiveXMLFallback(ply, nextPageLink, callback)
@@ -114,9 +116,9 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 					SGRF.Log('DEBUG', 'Player %s (%s) group status changed (LEFT)!', ply:Nick(), ply:SteamID())
 					ply:SetPData('SGRF_InSteamGroup', 'false')
 				end
-			end
 
-			callback(ply)
+				callback(ply)
+			end
 		end,
 		function(error)
 			SGRF.Log('ERROR', 'Fallback API check failed with code %s', error)
