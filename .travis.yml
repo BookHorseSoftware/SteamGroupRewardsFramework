@@ -1,8 +1,8 @@
 language: generic
 sudo: false
 before_install:
-  - 'wget https://github.com/FPtje/GLuaFixer/releases/download/1.9.10/glualint-linux-1.9.10-stripped.tar.gz'
-  - 'tar xvf $PWD/glualint-linux-1.9.10-stripped.tar.gz'
+  - 'wget https://github.com/FPtje/GLuaFixer/releases/download/1.11.1/glualint-1.11.1-linux-stripped.zip'
+  - 'unzip $PWD/glualint-linux-1.11.1-stripped.tar.gz'
   - 'chmod +x $PWD/glualint'
 install: true
 script:
