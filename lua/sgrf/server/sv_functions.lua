@@ -58,14 +58,16 @@ function SGRF.RewardPlayer(ply, skipRecurringRewards)
 	end)
 end
 
-local function recursiveXMLFallback(ply, xmlUrl, callback)
+local function recursiveXMLFallback(ply, steamid64, xmlUrl, callback)
+SGRF.Log('TRACE', 'ply: %s, steamid64: %s, xmlUrl: %s, callback: %s', ply, steamid64, xmlUrl, callback)
 	http.Fetch(xmlUrl,
 		function(xml, _, _, _)
+			-- SGRF.Log('TRACE', 'xmlUrl: %s\nbody:\n%s', xmlUrl, xml)
 			ply.InGroup = false
 			local nextPageLink
 			local traversedMembers = false
 
-			doc = SGRF.Lib.SLAXML:dom(body)
+			doc = SGRF.Lib.SLAXML:dom(xml)
 
 			-- This is nasty, yes. But it works!
 			SGRF.Log('DEBUG', 'Beginning body traversal...')
@@ -75,9 +77,9 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 					SGRF.Log('DEBUG', 'Found root element')
 					for k2, child2 in pairs(child.el) do
 						SGRF.Log('DEBUG', '%d - %d: %s (%s) encountered', k, k2, child2.name, child2.type) -- shut up about my code pyramids glualint :(
-						if child.name == 'nextPageLink' then
+						if child2.name == 'nextPageLink' then
 							SGRF.Log('DEBUG', 'Found next page link')
-							nextPageLink = child.kids[0].value
+							nextPageLink = child2.kids[1].value
 							if traversedMembers then break end -- prevent one from overstepping the other
 						elseif child2.name == 'members' then -- members list
 							SGRF.Log('DEBUG', 'Found members element')
@@ -85,9 +87,9 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 							for k3, member in pairs(child2.el) do
 								SGRF.Log('DEBUG', '%d - %d - %d: %s (%s) encountered', k, k2, k3, member.name, member.type)
 								if member.name == 'steamID64' then
-									SGRF.Log('DEBUG', 'Found steamID64 element with value %s', el.value)
+									SGRF.Log('DEBUG', 'Found steamID64 element with value %s', member.kids[1].value)
 
-									if el.value == steamid64 then
+									if member.kids[1].value == steamid64 then
 										SGRF.Log('DEBUG', 'Found matching steamID64 element')
 										ply.InGroup = true
 										break
@@ -111,7 +113,7 @@ local function recursiveXMLFallback(ply, xmlUrl, callback)
 				callback(ply)
 			elseif nextPageLink then
 				SGRF.Log('DEBUG', 'Player %s (%s) not found on page "%s"', ply:Nick(), ply:SteamID(), xmlUrl)
-				recursiveXMLFallback(ply, nextPageLink, callback)
+				recursiveXMLFallback(ply, steamid64, nextPageLink, callback)
 			else
 				SGRF.Log('DEBUG', 'Player %s (%s) is not in group (XML API).', ply:Nick(), ply:SteamID())
 
@@ -137,6 +139,7 @@ end
 -- @param callback  The callback to run when complete
 function SGRF.CheckPlayer(ply, callback)
 	local steamid64 = ply:SteamID64()
+	
 	local url = 'https://api.steampowered.com/ISteamUser/GetUserGroupList/v1/?format=json&key=' .. SGRF.Config.SteamAPIKey .. '&steamid=' .. steamid64
 
 	http.Fetch(url,
@@ -172,9 +175,9 @@ function SGRF.CheckPlayer(ply, callback)
 			else
 				SGRF.Log('DEBUG', 'Steam API check failed for player %s (%s) - attempting fallback XML method...', ply:Nick(), ply:SteamID())
 
-				local xmlUrl = 'http://steamcommunity.com/gid/' .. SGRF.Config.SteamGroup .. '/memberslistxml/?xml=1'
+				local xmlUrl = 'https://steamcommunity.com/gid/' .. SGRF.Config.SteamGroup .. '/memberslistxml/?xml=1'
 
-				recursiveXMLFallback(ply, xmlUrl, callback)
+				recursiveXMLFallback(ply, steamid64, xmlUrl, callback)
 			end
 		end,
 		function(error)
