@@ -41,6 +41,14 @@ General configuration may be found under the **GENERAL SETTINGS** header in `lua
 
   This is a Steam Community API key. You can find it at http://steamcommunity.com/dev/apikey.
 
+- `SGRF.Config.LogDebugMessages`
+
+  Logs debug and trace output for debugging purposes. Only set this if you know what you're doing, since these messages can get pretty spammy.
+
+- `SGRF.Config.SilentMode`
+
+  Controls whether broadcast chat messages should be sent to players.
+
 ## Usage
 
 ### Adding new rewards

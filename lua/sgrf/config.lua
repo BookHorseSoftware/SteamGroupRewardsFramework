@@ -30,6 +30,9 @@ SGRF.Config.SteamAPIKey = 'CHANGE ME'
 -- console spam.
 SGRF.Config.LogDebugMessages = false
 
+--- Hide chat broadcasts when a user joins the Steam group
+SGRF.Config.SilentMode = false
+
 --[[-------------------------
        REWARDS SETTINGS
 

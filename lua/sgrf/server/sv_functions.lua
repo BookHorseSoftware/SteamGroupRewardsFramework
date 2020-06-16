@@ -50,16 +50,17 @@ function SGRF.RewardPlayer(ply, skipRecurringRewards)
 			ply:SetPData('SGRF_InSteamGroup', 'true')
 			SGRF.ColoredChatPrint(ply, 'Thank you for joining our Steam group!')
 
-			SGRF.ColoredChatBroadcast(ply, Color(255, 255, 255), ' just got rewards for joining our ', Color(100, 255, 100), 'Steam group', Color(255, 255, 255), '!')
-			if SGRF.Config.Commands[1] then
-				SGRF.ColoredChatBroadcast('Type ', Color(100, 100, 255), SGRF.Config.Commands[1], Color(255, 255, 255), ' in chat to join as well!')
+			if SGRF.Config.SilentMode then
+				SGRF.ColoredChatBroadcast(ply, Color(255, 255, 255), ' just got rewards for joining our ', Color(100, 255, 100), 'Steam group', Color(255, 255, 255), '!')
+				if SGRF.Config.Commands[1] then
+					SGRF.ColoredChatBroadcast('Type ', Color(100, 100, 255), SGRF.Config.Commands[1], Color(255, 255, 255), ' in chat to join as well!')
+				end
 			end
 		end
 	end)
 end
 
 local function recursiveXMLFallback(ply, steamid64, xmlUrl, callback)
-SGRF.Log('TRACE', 'ply: %s, steamid64: %s, xmlUrl: %s, callback: %s', ply, steamid64, xmlUrl, callback)
 	http.Fetch(xmlUrl,
 		function(xml, _, _, _)
 			-- SGRF.Log('TRACE', 'xmlUrl: %s\nbody:\n%s', xmlUrl, xml)
